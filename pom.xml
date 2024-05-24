@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.ada</groupId>
     <artifactId>EconomizaAPI</artifactId>
@@ -14,9 +14,13 @@
     <name>EconomizaAPI</name>
     <description>EconomizaAPI</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>11</java.version>
+        <maven.compiler.release>11</maven.compiler.release>
+        <!-- Versão do Spring Security -->
+        <spring-security.version>6.2.4</spring-security.version>
     </properties>
     <dependencies>
+        <!-- Dependências do Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -45,19 +49,39 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- Dependências de Teste -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.12.4</version>
+            <scope>test</scope>
         </dependency>
+        <!-- Dependência para o Spring Security Test -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Dependência para o Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+        <!-- Dependência para validação de beans -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -67,6 +91,7 @@
 
     <build>
         <plugins>
+            <!-- Plugin do Spring Boot Maven -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -81,5 +106,16 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
+
+
+
+
+
+
+
+
+
+
+
+

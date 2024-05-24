@@ -16,6 +16,7 @@ public class Localizacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "coordenadas", nullable = false)
     @NotBlank
     private String coordenadas;
@@ -23,7 +24,7 @@ public class Localizacao {
     public Localizacao(String coordenadas) {
         this.coordenadas = coordenadas;
     }
-  
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,5 +37,6 @@ public class Localizacao {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
-
 }
+
+

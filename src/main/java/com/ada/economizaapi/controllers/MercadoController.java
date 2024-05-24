@@ -4,6 +4,7 @@ import com.ada.economizaapi.services.MercadoService;
 import com.ada.economizaapi.entities.Mercado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,35 +15,37 @@ import java.util.Optional;
 public class MercadoController {
 
     @Autowired
-    MercadoService mercadoService;
+    private MercadoService mercadoService;
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    public List<Mercado> findAll() {
-            return mercadoService.findAll();
+    public ResponseEntity<List<Mercado>> findAll() {
+        List<Mercado> mercados = mercadoService.findAll();
+        return new ResponseEntity<>(mercados, HttpStatus.OK);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Optional<Mercado> findById(@PathVariable Long id) {
-            return mercadoService.findById(id);
+    public ResponseEntity<Mercado> findById(@PathVariable Long id) {
+        Optional<Mercado> mercado = mercadoService.findById(id);
+        return mercado.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
-    public Mercado post(@RequestBody Mercado mercado) {
-            return mercadoService.save(mercado);
+    public ResponseEntity<Mercado> post(@RequestBody Mercado mercado) {
+        Mercado savedMercado = mercadoService.save(mercado);
+        return new ResponseEntity<>(savedMercado, HttpStatus.CREATED);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Mercado update(@PathVariable Long id, @RequestBody Mercado mercado) {
-            return mercadoService.update(id, mercado);
+    public ResponseEntity<Mercado> update(@PathVariable Long id, @RequestBody Mercado mercado) {
+        Mercado updatedMercado = mercadoService.update(id, mercado);
+        return new ResponseEntity<>(updatedMercado, HttpStatus.OK);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-           mercadoService.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        mercadoService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+
